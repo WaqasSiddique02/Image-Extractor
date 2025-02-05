@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs'); 
 const router = express.Router();
 const sql = require('mssql');
 
@@ -15,19 +16,19 @@ router.get('/', async (req, res) => {
 
 // POST a new user
 router.post('/', async function (req, res) {
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
+    const { name, email, password } = req.body;
     
     try {
-        const query = `INSERT INTO Users (name, email, password) VALUES ('${name}', '${email}', '${password}')`;
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const query = `INSERT INTO Users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}')`;
         await sql.query(query);
-        res.send("User added successfully");
+        
+        res.status(201).send("User added successfully");
     } catch (err) {
         console.log(err);
         res.status(500).send("Insert failed");
     }
 });
-
 
 module.exports = router;

@@ -14,8 +14,8 @@ const app = express();
 
 // Database configuration
 const config = {
-  user: 'owais',
-  password: 'awais@456',
+  user: 'waqas',
+  password: 'waqas@12345',
   server: 'localhost',
   database: 'imageocr',
   options: {
