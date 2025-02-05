@@ -6,7 +6,7 @@ const router = express.Router();
 // Set Tesseract path early in the code
 process.env.TESSERACT_PATH = "D:\\Software\\tesseract\\tesseract.exe";
 console.log("Tesseract Path:", process.env.TESSERACT_PATH); // To verify if the path is set correctly
-
+ 
 // Tesseract configuration
 const config = {
   lang: "eng",
@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 });
 
 
-// tesseract.recognize("D:\\Learning\\Web Development\\MileStone Project\\imageExtractor-backend\\public\\images\\englishpronouns.png", config)
+// tesseract.recognize("D:\\Web-Dev\\New folder\\Image-Extractor\\public\\images\\englishpronouns.png", config)
 //   .then(text => {
 //     console.log("OCR Result:", text);
 //   })
