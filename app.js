@@ -12,7 +12,7 @@ const usersRouter = require('./routes/users');
 const uploadRouter = require('./routes/uploadedImages');
 
 const app = express();
-app.use(cors());
+
 
 // Database configuration
 const config = {
