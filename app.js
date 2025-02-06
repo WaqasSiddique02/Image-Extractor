@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sql = require('mssql');
 const bodyParser = require('body-parser');
+const cors = require('cors');  // Import CORS
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -14,14 +15,13 @@ const app = express();
 
 // Database configuration
 const config = {
-  user: 'waqas',
-  password: 'waqas@12345',
+  user: 'owais',
+  password: 'awais@456',
   server: 'localhost',
   database: 'imageocr',
   options: {
     trustServerCertificate: true,
     encrypt: false,
-    
   },
   authentication:{
     type: 'default',
@@ -43,6 +43,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Middleware
+app.use(cors()); // Enable CORS for all routes
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

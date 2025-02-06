@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken'); // Add jwt package
 const router = express.Router();
 const sql = require('mssql');
 
+
 // Secret key for JWT (you should keep it in a safe place like environment variables)
 const JWT_SECRET = 'your_jwt_secret_key'; 
 
@@ -19,12 +20,21 @@ router.get('/', async (req, res) => {
 });
 
 // POST a new user
-router.post('/', async function (req, res) {
+router.post('/signup', async function (req, res) {
     const { name, email, password } = req.body;
 
     try {
+        // Check if user already exists in the database
+        const result = await sql.query`SELECT * FROM Users WHERE email = ${email}`;
+
+        if (result.recordset.length > 0) {
+            return res.status(400).json({ message: 'User already exists. Please log in.' });
+        }
+
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Insert new user
         const query = `INSERT INTO Users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}')`;
         await sql.query(query);
 
@@ -35,7 +45,7 @@ router.post('/', async function (req, res) {
     }
 });
 
-// POST login (authenticate user)
+// POST login (authenticate user)node
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -57,7 +67,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Create JWT token
-        const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '10s' });
 
         // Send the token in the response
         res.status(200).json({ message: 'Login successful', token });
