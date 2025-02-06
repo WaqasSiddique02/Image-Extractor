@@ -52,4 +52,13 @@ router.post("/upload", upload.single("image"), async (req, res) => {
   }
 });
 
+
+// tesseract.recognize("D:\\Web-Dev\\New folder\\Image-Extractor\\public\\images\\englishpronouns.png", config)
+//   .then(text => {
+//     console.log("OCR Result:", text);
+//   })
+//   .catch(error => {
+//     console.error("OCR Error:", error.message);
+//   });
+
 module.exports = router;
